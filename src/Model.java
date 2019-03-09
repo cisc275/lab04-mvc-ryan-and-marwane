@@ -10,45 +10,50 @@
  **/
 
 public class Model {
-	int direction;
-    int xloc = 0;
-    int yloc = 0;
-    int yMult = 1;
-    int xMult = 1;
-    int xIncr = 1;
-    int yIncr = 1;
+	private int direction;
+    private int xloc = 0;
+    private int yloc = 0;
+    private int yMult = 1;
+    private int xMult = 1;
+    private final int xIncr = 8;
+    private final int yIncr = 2;
     private int frameWidth = 500;
     private int frameHeight = 300;
     private int imageWidth = 165;
     private int imageHeight = 165;
-    private final int height, width;
     private int SOUTHEAST = 5;
-    private int NORTHWEST = 3;
+    private int NORTHWEST = 4;
     private int SOUTHWEST = 6;
-    private int NORTHEAST = 2;
+    private int NORTHEAST = 3;
 	
-	public Model(int height, int width, int imageHeight, int imageWidth) {
-		this.height = height;
-		this.width = width;
+	public Model(int frameWidth, int frameHeight, int imageHeight, int imageWidth) {
+		this.frameWidth = frameWidth;
+		this.frameHeight = frameHeight;
 		this.imageHeight = imageHeight;
 		this.imageWidth = imageWidth;
 	}
 	
 	public void updateLocationAndDirection() {
 		//collisions
-		xloc*=(xMult*xIncr);
-		yloc*=(yMult*yIncr);
+		xloc+=(xMult*xIncr);
+		yloc+=(yMult*yIncr);
+		//System.out.println("in updateLocation");
 		if (xloc + imageWidth >= frameWidth)	{
     		xMult = -1;
+    		System.out.println("in 1");
     	}
     	if (xloc <= 0)	{
     		xMult = 1;
+    		System.out.println("in 2");
     	}
     	if (yloc + imageHeight >= frameHeight)	{
     		yMult = -1;
+    		System.out.println("in 3");
     	}
     	if (yloc <= 0)	{
     		yMult = 1;
+    		yloc+=(yMult*yIncr);
+    		System.out.println("in 4");
     	}
     	if (yMult == 1 && xMult == 1)	{
     		this.direction = SOUTHEAST;
@@ -65,11 +70,11 @@ public class Model {
 	}
 	
 	public int getHeight() {
-		return height;
+		return frameHeight;
 	}
 
 	public int getWidth() {
-		return width;
+		return frameWidth;
 	}
 
 	public int getImageHeight() {

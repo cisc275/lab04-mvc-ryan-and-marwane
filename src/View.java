@@ -27,14 +27,12 @@ public class View extends JPanel {
     BufferedImage[] pics;
     BufferedImage[][] animations;
     int picNum = 0;
-	static int height;
-	static int width;
-	private final int imageHeight = 165;
-	private final int imageWidth = 165;
+	private int imageHeight = 165;
+	private int imageWidth = 165;
     private int frameWidth = 500;
     private int frameHeight = 300;
-    int orcx, orcy;
-    int orcDirect;
+    private int orcx, orcy;
+    private int orcDirect;
 	
 	public View()	{
 		JFrame frame = new JFrame();
@@ -46,11 +44,8 @@ public class View extends JPanel {
     	
     	animations = new BufferedImage[WalkingAnimations][frameCount];
 
-		
 		String[] directionArray = {"southeast", "east", "north", "northeast", "northwest", "south", "southwest", "west"};
     
-  
-    	
     	pics = new BufferedImage[frameCount];
     	for(int i = 0; i < WalkingAnimations; i++)	{
     		pics[i] = createImage("src/orc_animation/orc_forward_" + directionArray[i] + ".png");
@@ -65,7 +60,6 @@ public class View extends JPanel {
 
 	public void paint(Graphics g) {
 		picNum = (picNum + 1) % frameCount;
-		System.out.println("WORKS");
 		g.drawImage(animations[this.orcDirect][picNum], this.orcx, this.orcy, Color.gray, this);
 	}
 	public void update(int x, int y, int direction) {
@@ -73,6 +67,7 @@ public class View extends JPanel {
 			this.orcx = x;
 			this.orcy = y;
 			this.orcDirect = direction;
+			this.setBackground(Color.gray);
 			this.repaint();
 			Thread.sleep(100);
 		} catch (InterruptedException e)	{
@@ -99,11 +94,11 @@ public class View extends JPanel {
     }
 
 	public int getHeight() {
-		return height;
+		return frameHeight;
 	}
 
 	public int getWidth() {
-		return width;
+		return frameWidth;
 	}
 
 	public int getImageHeight() {
